@@ -9,6 +9,9 @@
 short redrawScreen = 1;
 u_int fontFgColor = COLOR_GREEN;
 
+long COLOR1;
+long COLOR2;
+
 void wdt_c_handler()
 {
   static int secCount = 0;
@@ -32,12 +35,38 @@ void main()
   enableWDTInterrupts();      /**< enable periodic interrupt */
   or_sr(0x8);	              /**< GIE (enable interrupts) */
   
-  clearScreen(COLOR_BLUE);
+  clearScreen(COLOR_BLACK);
+
+  u_char centerWidth = (screenWidth/2) + 1;
+  u_char centerHeight = (screenHeight/2) + 1;
+  
+  
+  static u_char colorState = 0;
+  
   while (1) {			/* forever */
     if (redrawScreen) {
       redrawScreen = 0;
-      drawString5x7(20,20, "hello", fontFgColor, COLOR_BLUE);
-    }
+
+      switch(colorState){
+      case 0: COLOR1 = COLOR_RED;    COLOR2 = COLOR_WHITE; colorState = 1; break;
+      case 1: COLOR1 = COLOR_WHITE;  COLOR2 = COLOR_RED;   colorState = 0; break;
+      }
+      
+      for(u_char r = 0; r < 10; r++){
+	for(u_char c = 0; c <= r; c++){
+	  drawPixel(centerWidth-c, centerHeight-r-1, COLOR1);
+	  drawPixel(centerWidth+c, centerHeight-r-1, COLOR1);
+	  drawPixel(centerWidth-c, centerHeight+r-20, COLOR2);
+	  drawPixel(centerWidth+c, centerHeight+r-20, COLOR2);
+	}
+      }
+
+      for(u_char c = 10; c < screenWidth-10; c++){
+	for(u_char r = 0; r < 10; r++){
+	  
+	}
+      }
+    
     P1OUT &= ~LED_GREEN;	/* green off */
     or_sr(0x10);		/**< CPU OFF */
     P1OUT |= LED_GREEN;		/* green on */
