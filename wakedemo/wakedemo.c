@@ -61,15 +61,16 @@ void main()
 	}
       }
 
-      for(u_char c = 10; c < screenWidth-10; c++){
-	for(u_char r = 0; r < 10; r++){
-	  
-	}
-      }
-    
+      drawString11x16(20,20,"Hello", COLOR1, COLOR2);
+
+
+      
+    }
+      
     P1OUT &= ~LED_GREEN;	/* green off */
     or_sr(0x10);		/**< CPU OFF */
     P1OUT |= LED_GREEN;		/* green on */
+    
   }
 }
 
