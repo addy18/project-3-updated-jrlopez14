@@ -1,11 +1,14 @@
 #include <msp430.h>
+#include "switches.h"
 #include "stateMachines.h"
 #include "led.h"
 #include "buzzer.h"
 
+
 static short freq = 500; // Initial frequency of state 2.
 static short state2_status = 1; // Initial state for state 2.
 
+char super_state = 0;
 
 // Toggling red and green leds. 
 char state1()
@@ -115,7 +118,7 @@ char state4(){
 // Changes state when super_state is changed.
 void state_advance()
 {
-  char changed = 0;
+  char changed = 0; 
   switch(super_state){    
   case 1:
     changed = state1(); // Toggling leds and buzzer.
@@ -129,6 +132,7 @@ void state_advance()
   case 4:
     changed = state4(); // Leds and Buzzer off.
     break;
+  default: red_on = 1;
   }
   leds_changed = changed;
   led_update();

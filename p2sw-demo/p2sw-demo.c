@@ -13,7 +13,7 @@ void main()
 {
   configureClocks();
   lcd_init();
-  p2sw_init(15);
+  p2sw_init(0xF);
   or_sr(0x8);			/* GIE (enable interrupts) */
   u_char width = screenWidth, height = screenHeight;
 
