@@ -29,8 +29,7 @@ switch_init()			/* setup switch */
 // Handles Switches
 void
 switch_interrupt_handler()
-{
-  
+{  
   char p2val = switch_update_interrupt_sense();
 
   if ( (p2val & SW1) == 0) // Switch 1 was pressed.

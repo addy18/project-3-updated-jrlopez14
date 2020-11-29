@@ -1,10 +1,13 @@
 #include <msp430.h>
+#include <libTimer.h>
+#include <lcdutils.h>
+#include <lcddraw.h>
 #include "switches.h"
 #include "stateMachines.h"
 #include "led.h"
 #include "buzzer.h"
 
-
+short redrawScreen;
 static short freq = 500; // Initial frequency of state 2.
 static short state2_status = 1; // Initial state for state 2.
 
@@ -109,15 +112,14 @@ void dimLights(char x){
 char state4(){
   buzzer_set_period(0);
   red_on = 0;
-  green_on = 0;
   leds_changed = 1;
   led_update();
   return 1; 
 }
 
 // Changes state when super_state is changed.
-void state_advance()
-{
+/* void state_advance()
+{ 
   char changed = 0; 
   switch(super_state){    
   case 1:
@@ -132,8 +134,11 @@ void state_advance()
   case 4:
     changed = state4(); // Leds and Buzzer off.
     break;
-  default: red_on = 1;
   }
   leds_changed = changed;
   led_update();
-}
+  } */
+
+
+
+

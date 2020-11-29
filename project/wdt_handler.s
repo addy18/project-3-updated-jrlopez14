@@ -49,10 +49,8 @@ WDT:
 	POP	R15
 	cmp	#0, &redrawScreen
 	jz	dont_wake
-	bis     #0x40, &P1OUT
 	and	#0xffef, 0(r1)	; clear CPU off in saved SR
 dont_wake:
-	bic     ~0x40, &P1OUT
 	RETI
 	.size	WDT, .-WDT
 	.local	count

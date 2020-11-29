@@ -8,5 +8,6 @@ void up_state();
 void down_state();
 void buzzer_advance();
 void dimLights(char x);
+void lcd_update();
 
 #endif // included
