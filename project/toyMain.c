@@ -13,6 +13,7 @@ short previousState = 0;
 u_char centerWidth = screenWidth/2 + 1;
 u_char centerHeight = screenHeight/2 +1;
 
+void drawDiamond(u_char col, u_char row, u_int color);
 
 void wdt_c_handler()
 {
@@ -66,10 +67,11 @@ void main()
       case 1:
 	for(u_char r = 0; r < 10; r++){
 	  for(u_char c = 0; c <= r; c++){
-	    drawPixel(centerWidth-c,centerHeight-r-1,COLOR_RED);
-	    drawPixel(centerWidth+c,centerHeight-r-1,COLOR_RED);
-	    drawPixel(centerWidth-c,centerHeight+r-20,COLOR_RED);
-	    drawPixel(centerWidth+c,centerHeight+r-20,COLOR_RED);
+	    drawDiamond(centerWidth, centerHeight, COLOR_RED);
+	    // drawPixel(centerWidth-c,centerHeight-r-1,COLOR_RED);
+	    // drawPixel(centerWidth+c,centerHeight-r-1,COLOR_RED);
+	    // drawPixel(centerWidth-c,centerHeight+r-20,COLOR_RED);
+	    // drawPixel(centerWidth+c,centerHeight+r-20,COLOR_RED);
 	  }
 	}
 	previousState = 1;
