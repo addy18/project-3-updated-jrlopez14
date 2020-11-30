@@ -13,6 +13,7 @@ static short previous_state = 0;
 u_char centerWidth = screenWidth/2 + 1;
 u_char centerHeight = screenHeight/2 +1;
 
+// draws a diamond centered at the col and row with the size and color given
 void drawDiamond(u_char col, u_char row, u_char size, u_int color){
   for (u_char r = 0; r < size; r++){
     for (u_char c = 0; c <= r; c++){
@@ -23,7 +24,7 @@ void drawDiamond(u_char col, u_char row, u_char size, u_int color){
     }
   }
 }
-
+// Interrupt handler from p2 + a counter that sets redraw screen to 1, every second
 void wdt_c_handler()
 {
   static int s1Count = 0;
@@ -52,6 +53,12 @@ void wdt_c_handler()
   }
 }
 
+
+// State 1: Red Diamonds, Red Jeremiah
+// State 2: Blue Diamonds, Blue Jeremiah
+
+// State 3: Same screen as previous state
+// State 4: Erases diamonds and Jeremiah
 void main()
 {
   led_init();

@@ -9,6 +9,8 @@
 	.text
 
 	.global buzzer_advance
+
+	; if state2_status is 0, down state. otherwise upstate
 buzzer_advance:
 	cmp #0, &state2_status
 	jz else
@@ -21,6 +23,7 @@ else:
 	
 exit:
 	mov &freq, r12
-	call #get_period
+	call #get_period 	; calls get period from c, which does 2000000 / r12
+				; then calls buzzer_set_period with this value
 	call #buzzer_set_period
 	pop r0

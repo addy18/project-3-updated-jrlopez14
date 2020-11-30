@@ -15,6 +15,7 @@ void buzzer_advance();
 char super_state = 0;
 void drawDiamond(u_char col, u_char row, u_char size, u_int color);
 
+// didnt use, but was would be for assembly division by 2
 u_char halfNumber(u_char num){
   return num/2;
 }
