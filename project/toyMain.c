@@ -13,6 +13,9 @@ static short previous_state = 0;
 u_char centerWidth = screenWidth/2 + 1;
 u_char centerHeight = screenHeight/2 +1;
 
+// if positive true, otherwise false
+int isPositive(int num);
+
 // draws a diamond centered at the col and row with the size and color given
 void drawDiamond(u_char col, u_char row, u_char size, u_int color){
   for (u_char r = 0; r < size; r++){
@@ -73,10 +76,10 @@ void main()
   or_sr(0x08);	              /**< GIE (enable interrupts) */
   clearScreen(COLOR_BLACK);
 
-  if (isNegative(2) != 0) {
+  if (isPositive(2) != 0) {
     drawString8x12(0,screenHeight-25, "2 > 0 !!", COLOR_RED, COLOR_BLACK);
   }
-  if (isNegative(-2) == 0) {
+  if (isPositive(-2) == 0) {
     drawString5x7(0, screenHeight-10, "-1 < 0 !!", COLOR_BLUE, COLOR_BLACK);
   }
   while(1) {

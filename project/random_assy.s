@@ -1,8 +1,8 @@
 
 
-
-	.global isNegative
-isNegative:
+	.text
+	.global isPositive
+isPositive:
 	cmp #0, r12
 	jge exit
 
