@@ -35,10 +35,10 @@ void wdt_c_handler()
   static int sCount = 0;
   static int secCount = 0;
 
-  if (++ secCount == 250){
+  /*if (++ secCount == 250){
     secCount = 0;
     redrawScreen = 1;
-  }
+    }*/
   if (super_state != 3 && previous_state != super_state) redrawScreen = 1;
   if(super_state == 1){
     if (++ s1Count == 125) {
@@ -76,8 +76,8 @@ void main()
   or_sr(0x08);	              /**< GIE (enable interrupts) */
   clearScreen(COLOR_BLACK);
 
-  if (isPositive(2) != 0) {
-    drawString8x12(0,screenHeight-25, "2 > 0 !!", COLOR_RED, COLOR_BLACK);
+  if (isPositive(0) != 0) {
+    drawString5x7(7,screenHeight-20, "2 > 0 !!", COLOR_RED, COLOR_BLACK);
   }
   if (isPositive(-2) == 0) {
     drawString5x7(0, screenHeight-10, "-1 < 0 !!", COLOR_BLUE, COLOR_BLACK);
@@ -89,15 +89,9 @@ void main()
 
 
       static char color_state = 0;
-      u_int COLOR;
-      
-      switch(color_state){
-      case 0: COLOR = COLOR_RED; color_state = 1;  break;
-      case 1: COLOR = COLOR_BLUE; color_state = 0; break;
-      }
-      
+            
       switch(super_state){
-      case 0: drawString8x12(0,0,"Project 3:", COLOR_WHITE, COLOR_BLACK); break;
+      case 0: drawString5x7(0,0,"Project 3:", COLOR_WHITE, COLOR_BLACK); break;
       case 1:
 	lcd_state(COLOR_RED);
 	previous_state = 1;
