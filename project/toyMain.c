@@ -74,10 +74,10 @@ void main()
   clearScreen(COLOR_BLACK);
 
   if (isNegative(2) != 0) {
-    drawString5x7(0,10, "2 is not negative", COLOR_RED, COLOR_BLACK);
+    drawString8x12(0,screenHeight-25, "2 > 0 !!", COLOR_RED, COLOR_BLACK);
   }
   if (isNegative(-2) == 0) {
-    drawString5x7(0, 20, "-1 is negative", COLOR_BLUE, COLOR_BLACK);
+    drawString5x7(0, screenHeight-10, "-1 < 0 !!", COLOR_BLUE, COLOR_BLACK);
   }
   while(1) {
 
@@ -94,7 +94,7 @@ void main()
       }
       
       switch(super_state){
-      case 0: drawString5x7(0,0,"Project 3:", COLOR_WHITE, COLOR_BLACK); break;
+      case 0: drawString8x12(0,0,"Project 3:", COLOR_WHITE, COLOR_BLACK); break;
       case 1:
 	lcd_state(COLOR_RED);
 	previous_state = 1;
