@@ -2,7 +2,6 @@
 		.p2align 2
 		.text
 	
-
 jt:
 	.word exit
 	.word case1

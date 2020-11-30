@@ -12,6 +12,7 @@ void led_init()
   led_update();
 }
 
+
 void led_update(){
   if (leds_changed) {
     char ledFlags = redVal[red_on] | greenVal[green_on];

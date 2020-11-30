@@ -66,6 +66,8 @@ void main()
   or_sr(0x08);	              /**< GIE (enable interrupts) */
   clearScreen(COLOR_BLACK);
 
+  if (isNegative(2)) drawString5x7(100,0, "2 is not negative", COLOR_RED, COLOR_BLACK);
+  
   while(1) {
 
     if (redrawScreen = 1) {
