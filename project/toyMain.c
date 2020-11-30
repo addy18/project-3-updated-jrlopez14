@@ -8,12 +8,21 @@
 #include "led.h"
 
 short redrawScreen = 1;
-short previousState = 0;
+static short previous_state = 0;
 
 u_char centerWidth = screenWidth/2 + 1;
 u_char centerHeight = screenHeight/2 +1;
 
-void drawDiamond(u_char col, u_char row, u_int color);
+void drawDiamond(u_char col, u_char row, u_char size, u_int color){
+  for (u_char r = 0; r < size; r++){
+    for (u_char c = 0; c <= r; c++){
+      drawPixel(col-c, row-r-1, color);
+      drawPixel(col-c, row+r-(2*size), color);
+      drawPixel(col+c, row-r-1,color);
+      drawPixel(col+c, row+r-(2*size), color);
+    }
+  }
+}
 
 void wdt_c_handler()
 {
@@ -21,11 +30,12 @@ void wdt_c_handler()
   static int s2Count = 0;
   static int sCount = 0;
   static int secCount = 0;
-  secCount ++;
-  if(secCount == 250) {
+
+  if (++ secCount == 250){
     secCount = 0;
     redrawScreen = 1;
   }
+  if (super_state != 3 && previous_state != super_state) redrawScreen = 1;
   if(super_state == 1){
     if (++ s1Count == 125) {
       state_advance();
@@ -60,37 +70,32 @@ void main()
 
     if (redrawScreen = 1) {
       redrawScreen = 0;
+
+
+      static char color_state = 0;
+      u_int COLOR;
+      
+      switch(color_state){
+      case 0: COLOR = COLOR_RED; color_state = 1;  break;
+      case 1: COLOR = COLOR_BLUE; color_state = 0; break;
+      }
       
       switch(super_state){
       case 0: drawString5x7(0,0,"Project 3:", COLOR_WHITE, COLOR_BLACK); break;
-	
       case 1:
-	for(u_char r = 0; r < 10; r++){
-	  for(u_char c = 0; c <= r; c++){
-	    drawDiamond(centerWidth, centerHeight, COLOR_RED);
-	    // drawPixel(centerWidth-c,centerHeight-r-1,COLOR_RED);
-	    // drawPixel(centerWidth+c,centerHeight-r-1,COLOR_RED);
-	    // drawPixel(centerWidth-c,centerHeight+r-20,COLOR_RED);
-	    // drawPixel(centerWidth+c,centerHeight+r-20,COLOR_RED);
-	  }
-	}
-	previousState = 1;
+	lcd_state(COLOR_RED);
+	previous_state = 1;
  	break;
       case 2:
-	drawString5x7(40,40,"Hello", COLOR_RED, COLOR_BLACK);
-	previousState = 2;
+	lcd_state(COLOR_BLUE);
+	previous_state = 2;
 	break;
       case 3:
-	drawString5x7(40,40,"Hello", COLOR_YELLOW, COLOR_BLACK);
-	previousState = 3;
+	previous_state = 3;
 	break;
       case 4:
-	if (previousState == 1) 
-	if (previousState == 3) drawString5x7(40,40,"Hello",COLOR_BLACK,COLOR_BLACK);
-	
-	
-	drawString11x16(centerWidth-(4*11), centerHeight,"Goodbye!", COLOR_RED,COLOR_BLACK);
-	previousState = 4;
+	if (previous_state != 4) clearLcd();
+	previous_state = 4;
 	break;
       }
     }

@@ -7,23 +7,44 @@
 #include "led.h"
 #include "buzzer.h"
 
-short redrawScreen;
 static short freq = 500; // Initial frequency of state 2.
 static short state2_status = 1; // Initial state for state 2.
 
-char super_state = 0;
 
-// Toggling red and green leds. 
-char state1()
-{
-  char changed = 0;
-  changed = toggle_red();
-  leds_changed = changed;
-  led_update();
+char super_state = 0;
+void drawDiamond(u_char col, u_char row, u_char size, u_int color);
+
+void lcd_state(int COLOR){
+
+  u_char centerWidth = screenWidth/2 + 1;
+  u_char centerHeight = screenHeight/2 + 1;
+
+
+  drawDiamond(centerWidth, centerHeight-20, 10, COLOR);
+  drawDiamond(centerWidth-20, centerHeight, 10, COLOR);
+  drawDiamond(centerWidth, centerHeight+20, 10, COLOR);
+  drawDiamond(centerWidth+20, centerHeight, 10, COLOR);
+  drawDiamond(centerWidth, centerHeight, 10, COLOR_WHITE);
+
+  drawString8x12(centerWidth-(8*4), centerHeight+40, "Jeremiah", COLOR, COLOR_BLACK);
 }
 
-// Toggles Red
-char toggle_red()
+void clearLcd(){
+  u_char centerWidth = screenWidth/2 + 1;
+  u_char centerHeight = screenHeight/2 + 1;
+
+  drawDiamond(centerWidth, centerHeight-20, 10, COLOR_BLACK);
+  drawDiamond(centerWidth-20, centerHeight, 10, COLOR_BLACK);
+  drawDiamond(centerWidth, centerHeight + 20, 10, COLOR_BLACK);
+  drawDiamond(centerWidth+20, centerHeight, 10, COLOR_BLACK);
+  drawDiamond(centerWidth, centerHeight, 10, COLOR_BLACK);
+
+  drawString8x12(centerWidth-(8*4), centerHeight+40, "Jeremiah", COLOR_BLACK, COLOR_BLACK);
+}
+
+// Toggling red 
+
+char state1()
 {
   static char stateS1 = 1;
 
@@ -42,6 +63,7 @@ char toggle_red()
   
   return 1;
 }
+
 
 /* Pitch rises from 500 Hz to 5000 Hz with red led on in 2s with an pitch increase intervals of 1every 1/10 of sec. Pitch decreases from 5000 Hz to 500 Hz with green led on in 1 sec, with pitch decrease intervals of 1/10 sec */
 
