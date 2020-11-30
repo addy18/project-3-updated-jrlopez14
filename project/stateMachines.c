@@ -7,13 +7,19 @@
 #include "led.h"
 #include "buzzer.h"
 
-static short freq = 500; // Initial frequency of state 2.
-static short state2_status = 1; // Initial state for state 2.
+extern short freq = 500; // Initial frequency of state 2.
+extern short state2_status = 1; // Initial state for state 2.
 
+void buzzer_advance();
 
 char super_state = 0;
 void drawDiamond(u_char col, u_char row, u_char size, u_int color);
 
+u_char halfNumber(u_char num){
+  return num/2;
+}
+
+//draws an arrangement of diamonds and prints jeremiah on screen
 void lcd_state(int COLOR){
 
   u_char centerWidth = screenWidth/2 + 1;
@@ -29,6 +35,7 @@ void lcd_state(int COLOR){
   drawString8x12(centerWidth-(8*4), centerHeight+40, "Jeremiah", COLOR, COLOR_BLACK);
 }
 
+// draws black diamonds over colored diamonds to erase them
 void clearLcd(){
   u_char centerWidth = screenWidth/2 + 1;
   u_char centerHeight = screenHeight/2 + 1;
@@ -92,12 +99,16 @@ void down_state()
 }
 
 // If state2_status == 1, increase pitch. Otherwise, decrease pitch. 
-void buzzer_advance(){
+/*void buzzer_advance(){
   if (state2_status) freq += 225;
   else freq -= 450;
   
   short cycles = 2000000/freq;  // 2000000 / frequency gives us the correct period.
   buzzer_set_period(cycles);
+  }*/
+
+short get_period(short freq){
+  return 2000000/freq;
 }
 
 // Cycles from no dim, to 50% dim to 33% dim, to 25% dim, to 12.5% dim, to 6.25% dim.
@@ -117,10 +128,14 @@ char state3()
   }
 }
 
+char modByX(char x, char dimCount){
+  return dimCount % x;
+}
+
 // Leds are on 1 of of x times.
 void dimLights(char x){
   
-  static short dimCount = 0;
+  static char dimCount = 0;
   switch(dimCount % x){
   case 0: red_on = 1;  dimCount++; break;
   case 1: red_on = 0;  dimCount++; break;
@@ -128,7 +143,7 @@ void dimLights(char x){
   }
   leds_changed = 1;
   led_update();
-}
+  }
 
 // Leds and buzzer off.
 char state4(){
