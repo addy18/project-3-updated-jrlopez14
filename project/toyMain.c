@@ -101,6 +101,7 @@ void main()
 	previous_state = 2;
 	break;
       case 3:
+	lcd_state(COLOR_PURPLE);
 	previous_state = 3;
 	break;
       case 4:
