@@ -27,6 +27,14 @@ void drawDiamond(u_char col, u_char row, u_char size, u_int color){
     }
   }
 }
+
+void drawMenu(u_int COLOR)
+{
+  drawString5x7(0,0,"Project 3:", COLOR_WHITE, COLOR_BLACK);
+  drawString5x7(0,(screenHeight/2 - 21), "SW1 Red Diamonds", COLOR, COLOR_BLACK);
+  drawString5x7(0, screenHeight/2, "SW2 Blue Diamonds", COLOR, COLOR_BLACK);
+  drawString5x7(0,(screenHeight/2 + 21), "SW4 Clear Diamonds", COLOR, COLOR_BLACK);
+}	
 // Interrupt handler from p2 + a counter that sets redraw screen to 1, every second
 void wdt_c_handler()
 {
@@ -39,7 +47,7 @@ void wdt_c_handler()
     secCount = 0;
     redrawScreen = 1;
     }*/
-  if ( super_state != 3 && previous_state != super_state) redrawScreen = 1;
+  if (previous_state != super_state) redrawScreen = 1;
   if(super_state == 1){
     if (++ s1Count == 125) {
       state_advance();
@@ -88,12 +96,17 @@ void main()
       redrawScreen = 0;
 
       switch(super_state){
-      case 0: drawString5x7(0,0,"Project 3:", COLOR_WHITE, COLOR_BLACK); break;
+      case 0:
+	drawString5x7(0,0,"Project 3:", COLOR_WHITE, COLOR_BLACK);
+	drawMenu(COLOR_WHITE);
+        break;
       case 1:
+	if(previous_state == 0) drawMenu(COLOR_BLACK);
 	lcd_state(COLOR_RED);
 	previous_state = 1;
  	break;
       case 2:
+	if(previous_state == 0) drawMenu(COLOR_BLACK);
         lcd_state(COLOR_BLUE);
 	previous_state = 2;
 	break;
@@ -102,6 +115,7 @@ void main()
 	previous_state = 3;
 	break;
       case 4:
+	if (previous_state == 0) drawMenu(COLOR_BLACK);
 	if (previous_state != 4) clearLcd();
         previous_state = 4;
 	break;

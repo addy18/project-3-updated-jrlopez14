@@ -27,10 +27,10 @@ void lcd_state(int COLOR){
   u_char centerHeight = screenHeight/2 + 1;
 
 
-  //drawDiamond(centerWidth, centerHeight-20, 10, COLOR);
-  //drawDiamond(centerWidth-20, centerHeight, 10, COLOR);
-  //drawDiamond(centerWidth, centerHeight+20, 10, COLOR);
-  //drawDiamond(centerWidth+20, centerHeight, 10, COLOR);
+  drawDiamond(centerWidth, centerHeight-20, 10, COLOR);
+  drawDiamond(centerWidth-20, centerHeight, 10, COLOR);
+  drawDiamond(centerWidth, centerHeight+20, 10, COLOR);
+  drawDiamond(centerWidth+20, centerHeight, 10, COLOR);
   drawDiamond(centerWidth, centerHeight, 10, COLOR_WHITE);
 
   drawString8x12(centerWidth-(8*4), centerHeight+40, "Jeremiah", COLOR, COLOR_BLACK);
