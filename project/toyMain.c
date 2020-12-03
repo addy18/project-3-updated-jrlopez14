@@ -39,7 +39,7 @@ void wdt_c_handler()
     secCount = 0;
     redrawScreen = 1;
     }*/
-  if (super_state != 3 && previous_state != super_state) redrawScreen = 1;
+  if ( super_state != 3 && previous_state != super_state) redrawScreen = 1;
   if(super_state == 1){
     if (++ s1Count == 125) {
       state_advance();
@@ -87,9 +87,6 @@ void main()
     if (redrawScreen = 1) {
       redrawScreen = 0;
 
-
-      static char color_state = 0;
-            
       switch(super_state){
       case 0: drawString5x7(0,0,"Project 3:", COLOR_WHITE, COLOR_BLACK); break;
       case 1:
@@ -97,16 +94,16 @@ void main()
 	previous_state = 1;
  	break;
       case 2:
-	lcd_state(COLOR_BLUE);
+        lcd_state(COLOR_BLUE);
 	previous_state = 2;
 	break;
       case 3:
-	lcd_state(COLOR_PURPLE);
+	//lcd_state(COLOR_PURPLE);
 	previous_state = 3;
 	break;
       case 4:
 	if (previous_state != 4) clearLcd();
-	previous_state = 4;
+        previous_state = 4;
 	break;
       }
     }

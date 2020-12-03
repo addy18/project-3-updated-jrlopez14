@@ -7,8 +7,8 @@
 #include "led.h"
 #include "buzzer.h"
 
-extern short freq = 500; // Initial frequency of state 2.
-extern short state2_status = 1; // Initial state for state 2.
+short freq = 500; // Initial frequency of state 2.
+short state2_status = 1; // Initial state for state 2.
 
 void buzzer_advance();
 
@@ -27,10 +27,10 @@ void lcd_state(int COLOR){
   u_char centerHeight = screenHeight/2 + 1;
 
 
-  drawDiamond(centerWidth, centerHeight-20, 10, COLOR);
-  drawDiamond(centerWidth-20, centerHeight, 10, COLOR);
-  drawDiamond(centerWidth, centerHeight+20, 10, COLOR);
-  drawDiamond(centerWidth+20, centerHeight, 10, COLOR);
+  //drawDiamond(centerWidth, centerHeight-20, 10, COLOR);
+  //drawDiamond(centerWidth-20, centerHeight, 10, COLOR);
+  //drawDiamond(centerWidth, centerHeight+20, 10, COLOR);
+  //drawDiamond(centerWidth+20, centerHeight, 10, COLOR);
   drawDiamond(centerWidth, centerHeight, 10, COLOR_WHITE);
 
   drawString8x12(centerWidth-(8*4), centerHeight+40, "Jeremiah", COLOR, COLOR_BLACK);
@@ -99,6 +99,7 @@ void down_state()
   leds_changed= 1; led_update();
 }
 
+// Now in buzzer_advance.s
 // If state2_status == 1, increase pitch. Otherwise, decrease pitch. 
 /*void buzzer_advance(){
   if (state2_status) freq += 225;
@@ -155,6 +156,7 @@ char state4(){
   return 1; 
 }
 
+// Now in state_advance.s
 // Changes state when super_state is changed.
 /* void state_advance()
 { 

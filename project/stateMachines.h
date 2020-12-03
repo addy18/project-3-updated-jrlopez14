@@ -2,6 +2,8 @@
 #define state_Machine_included
 
 extern char lcdState;
+extern short freq;
+extern short state2_status;
 
 void state_advance();
 char toggle_red();

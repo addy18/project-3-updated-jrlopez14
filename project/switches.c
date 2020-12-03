@@ -3,6 +3,8 @@
 #include "led.h"
 #include "stateMachines.h"
 
+
+char previous_state;
 char super_state;
 
 static char 
@@ -30,6 +32,7 @@ switch_init()			/* setup switch */
 void
 switch_interrupt_handler()
 {  
+  previous_state = super_state;
   char p2val = switch_update_interrupt_sense();
 
   if ( (p2val & SW1) == 0) // Switch 1 was pressed.
@@ -40,4 +43,5 @@ switch_interrupt_handler()
     super_state = 3;
   else if ( (p2val & SW4) == 0) // Switch 4 was pressed.
     super_state = 4;
+  
 }
