@@ -22,10 +22,10 @@ u_char halfNumber(u_char num){
 
 //draws an arrangement of diamonds and prints jeremiah on screen
 void lcd_state(int COLOR){
-
   u_char centerWidth = screenWidth/2 + 1;
   u_char centerHeight = screenHeight/2 + 1;
 
+  and_sr(~0x08);
 
   drawDiamond(centerWidth, centerHeight-20, 10, COLOR);
   drawDiamond(centerWidth-20, centerHeight, 10, COLOR);
@@ -34,6 +34,8 @@ void lcd_state(int COLOR){
   drawDiamond(centerWidth, centerHeight, 10, COLOR_WHITE);
 
   drawString8x12(centerWidth-(8*4), centerHeight+40, "Jeremiah", COLOR, COLOR_BLACK);
+
+  or_sr(0x08);
 }
 
 // draws black diamonds over colored diamonds to erase them
@@ -41,6 +43,8 @@ void clearLcd(){
   u_char centerWidth = screenWidth/2 + 1;
   u_char centerHeight = screenHeight/2 + 1;
 
+  and_sr(~0x08);
+  
   drawDiamond(centerWidth, centerHeight-20, 10, COLOR_BLACK);
   drawDiamond(centerWidth-20, centerHeight, 10, COLOR_BLACK);
   drawDiamond(centerWidth, centerHeight + 20, 10, COLOR_BLACK);
@@ -48,6 +52,8 @@ void clearLcd(){
   drawDiamond(centerWidth, centerHeight, 10, COLOR_BLACK);
 
   drawString8x12(centerWidth-(8*4), centerHeight+40, "Jeremiah", COLOR_BLACK, COLOR_BLACK);
+
+  or_sr(0x08);
 }
 
 // Toggling red 

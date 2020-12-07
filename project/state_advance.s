@@ -1,5 +1,5 @@
 		.arch msp430g2553
-		.p2align 2
+		.p2align 1,0
 		.text
 	
 jt:
@@ -9,9 +9,11 @@ jt:
 	.word case3
 	.word case4
 
+	.data
 	.extern super_state
 	.extern leds_changed
-	
+
+	.text
 	.global state_advance
 state_advance:
 	sub #2, r1

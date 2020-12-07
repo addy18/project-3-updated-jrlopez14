@@ -10,7 +10,7 @@ AS              = msp430-elf-gcc -mmcu=${CPU} -c
 all:toyMain.elf
 
 #additional rules for files
-toyMain.elf: ${COMMON_OBJECTS} toyMain.o wdt_handler.o led.o switches.o buzzer.o p2_interrupt_handler.o stateMachines.o state_advance.s buzzer_advance.s random_assy.s
+toyMain.elf: ${COMMON_OBJECTS} toyMain.o wdt_handler.o led.o switches.o buzzer.o p2_interrupt_handler.o stateMachines.o state_advance.o buzzer_advance.o random_assy.o
 	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^ -lTimer -lLcd 
 
 load: toyMain.elf

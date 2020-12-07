@@ -1,11 +1,7 @@
-
-
-	
-
 	.text
 	.global isPositive
 isPositive:
-	cmp #0, r12
+	cmp #-1, r12
 	jge Positive
 
 Negative:

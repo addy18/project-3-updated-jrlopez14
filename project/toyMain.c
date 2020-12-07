@@ -48,20 +48,24 @@ void wdt_c_handler()
     redrawScreen = 1;
     }*/
   if (previous_state != super_state) redrawScreen = 1;
-  if(super_state == 1){
+
+  switch(super_state){
+  case 1:
     if (++ s1Count == 125) {
       state_advance();
       s1Count = 0;
     }
-  } else if (super_state == 2) {
+    break;
+  case 2:
     if ( (++ s2Count % 25) == 0) buzzer_advance();
     if (s2Count == 250){
       state_advance();
       s2Count = 0;
     }
-  } else{
-    state_advance();
-  }
+    break;
+  default:
+      state_advance();
+  }  
 }
 
 
@@ -88,11 +92,11 @@ void main()
     drawString5x7(7,screenHeight-20, "2 > 0 !!", COLOR_RED, COLOR_BLACK);
   }
   if (isPositive(-2) == 0) {
-    drawString5x7(0, screenHeight-10, "-1 < 0 !!", COLOR_BLUE, COLOR_BLACK);
+    drawString5x7(0, screenHeight-10, "-2 < 0 !!", COLOR_BLUE, COLOR_BLACK);
   }
   while(1) {
 
-    if (redrawScreen = 1) {
+    if (redrawScreen == 1) {
       redrawScreen = 0;
 
       switch(super_state){
@@ -111,7 +115,8 @@ void main()
 	previous_state = 2;
 	break;
       case 3:
-	//lcd_state(COLOR_PURPLE);
+	if(previous_state == 0) drawMenu(COLOR_BLACK);
+	lcd_state(COLOR_PURPLE);
 	previous_state = 3;
 	break;
       case 4:
